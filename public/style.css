@@ -762,7 +762,7 @@ body {
 /* Card Body - Arabic Verse */
 .ayah-arabic {
   font-family: var(--font-arabic);
-  font-size: 28px; /* Managed dynamically by settings */
+  font-size: var(--arabic-font-size, 28px); /* Managed dynamically by settings */
   line-height: 2;
   text-align: right;
   direction: rtl;
@@ -774,7 +774,7 @@ body {
 
 /* Card Body - Translation */
 .ayah-translation {
-  font-size: 16px; /* Managed dynamically by settings */
+  font-size: var(--trans-font-size, 16px); /* Managed dynamically by settings */
   line-height: 1.6;
   color: var(--text-translation);
   text-align: left;
@@ -948,11 +948,11 @@ mark.highlight {
   }
   
   .ayah-arabic {
-    font-size: 24px;
+    font-size: calc(var(--arabic-font-size, 28px) - 4px); /* Scales dynamically with the slider */
   }
   
   .ayah-translation {
-    font-size: 14px;
+    font-size: calc(var(--trans-font-size, 16px) - 2px); /* Scales dynamically with the slider */
     padding-left: 12px;
   }
   
