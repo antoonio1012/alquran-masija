@@ -783,10 +783,23 @@ body {
   transition: font-size var(--transition-fast), color var(--transition-fast);
 }
 
+.ayah-translation small,
 .ayah-translation i {
   font-size: 0.85em;
   color: var(--text-muted);
+}
+
+.ayah-translation i {
   font-style: italic;
+}
+
+.ayah-translation small {
+  font-style: normal;
+}
+
+.ayah-translation small i,
+.ayah-translation i small {
+  font-size: 1em; /* Prevent double scaling when nested */
 }
 
 /* Matching Query Highlight style */

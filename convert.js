@@ -3,10 +3,19 @@ const fs = require('fs');
 
 function cleanHtml(html) {
   if (!html) return '';
-  // Remove all span opening tags but keep contents
-  let cleaned = html.replace(/<span[^>]*>/gi, '');
-  // Remove all span closing tags
+  
+  let cleaned = html;
+  
+  // 1. Replace 8.0pt, 9.0pt, 10.0pt spans with <small>...</small>
+  cleaned = cleaned.replace(/<span\s+style="font-size:\s*(8\.0|9\.0|10\.0)pt;">([\s\S]*?)<\/span>/gi, '<small>$2</small>');
+  
+  // 2. Replace 11.0pt spans with just their inner contents
+  cleaned = cleaned.replace(/<span\s+style="font-size:\s*11\.0pt;">([\s\S]*?)<\/span>/gi, '$1');
+  
+  // 3. Fallback: Remove any other span tags if any are left
+  cleaned = cleaned.replace(/<span[^>]*>/gi, '');
   cleaned = cleaned.replace(/<\/span>/gi, '');
+  
   return cleaned;
 }
 
