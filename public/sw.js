@@ -1,4 +1,4 @@
-const CACHE_NAME = 'quran-search-v1';
+const CACHE_NAME = 'quran-search-v2';
 const ASSETS = [
   '/',
   '/index.html',
