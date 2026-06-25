@@ -1,0 +1,953 @@
+/* ==========================================================================
+   CSS Reset & Custom Properties (Theme Variables)
+   ========================================================================== */
+:root {
+  /* Color Tokens - White/Light Mode (Default) */
+  --bg-app: #fafafa;
+  --bg-sidebar: #ffffff;
+  --bg-card: #ffffff;
+  --border-color: #e5e7eb;
+  --border-focus: #059669;
+  --text-primary: #111827;
+  --text-secondary: #374151;
+  --text-muted: #6b7280;
+  --primary: #059669; /* Elegant Emerald Green */
+  --primary-hover: #047857;
+  --primary-glow: rgba(5, 150, 105, 0.08);
+  --accent: #d97706; /* Warm amber/brown for highlighted text */
+  --accent-bg: rgba(217, 119, 6, 0.1);
+  
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+  --shadow-glow: 0 0 15px rgba(5, 150, 105, 0.15);
+  
+  --card-glow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(0, 0, 0, 0.05);
+  --glass-blur: blur(8px);
+  
+  --font-ui: 'Outfit', sans-serif;
+  --font-arabic: 'Amiri', serif;
+  
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  --sidebar-width: 320px;
+}
+
+/* Dark Mode Overrides (Slate-Dark instead of Blue-Dark) */
+.dark-theme {
+  --bg-app: #0f172a;
+  --bg-sidebar: #1e293b;
+  --bg-card: rgba(30, 41, 59, 0.7);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-focus: #10b981;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --primary: #10b981;
+  --primary-hover: #059669;
+  --primary-glow: rgba(16, 185, 129, 0.15);
+  --accent: #f59e0b;
+  --accent-bg: rgba(245, 158, 11, 0.15);
+  
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 0 15px rgba(16, 185, 129, 0.3);
+  
+  --card-glow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --glass-bg: rgba(15, 23, 42, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --glass-blur: blur(12px);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-ui);
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  overflow-x: hidden;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Common Components */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-family: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: #ffffff;
+}
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  box-shadow: 0 4px 12px var(--primary-glow);
+  transform: translateY(-1px);
+}
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background-color: var(--border-color);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+.btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+.light-theme .btn-secondary:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  border-radius: 6px;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+.icon-btn svg {
+  width: 20px;
+  height: 20px;
+}
+.icon-btn:hover {
+  background-color: var(--border-color);
+  color: var(--primary);
+  transform: scale(1.05);
+}
+
+.badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background-color: var(--primary);
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 10px;
+  min-width: 16px;
+  text-align: center;
+  line-height: 1;
+}
+
+.loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: var(--text-secondary);
+  gap: 15px;
+  width: 100%;
+}
+.loader::after {
+  content: "";
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--primary) 0%, #34d399 50%, #22d3ee 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ==========================================================================
+   App Structure & Layout
+   ========================================================================== */
+.app-container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* ==========================================================================
+   Sidebar Styles
+   ========================================================================== */
+.sidebar {
+  width: var(--sidebar-width);
+  background-color: var(--bg-sidebar);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: transform var(--transition-normal), background-color var(--transition-normal);
+}
+
+.sidebar-header {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo-icon {
+  width: 30px;
+  height: 30px;
+  color: var(--primary);
+}
+.logo h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.close-sidebar-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px;
+}
+.close-sidebar-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+.sidebar-search {
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+.sidebar-search input {
+  width: 100%;
+  padding: 10px 15px;
+  background-color: var(--bg-app);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.9rem;
+  transition: all var(--transition-fast);
+}
+.sidebar-search input:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+.surah-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Surah Card Items */
+.surah-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.surah-item:hover {
+  background-color: rgba(16, 185, 129, 0.06);
+  border-color: rgba(16, 185, 129, 0.3);
+  transform: translateX(4px);
+}
+.surah-item.active {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+}
+.surah-item.active .surah-num,
+.surah-item.active .surah-verses,
+.surah-item.active .surah-arabic {
+  color: #ffffff;
+}
+.surah-info-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.surah-num {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--border-color);
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: background-color var(--transition-fast);
+}
+.surah-item:hover .surah-num {
+  background-color: rgba(16, 185, 129, 0.2);
+}
+.surah-names {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.surah-name-id {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.surah-verses {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+.surah-info-right {
+  text-align: right;
+}
+.surah-arabic {
+  font-family: var(--font-arabic);
+  font-size: 1.15rem;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  z-index: 99;
+}
+
+/* ==========================================================================
+   Main Content Styles
+   ========================================================================== */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 0;
+  overflow-y: auto;
+}
+
+/* Header Styles */
+.main-header {
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--glass-bg);
+  border-bottom: 1px solid var(--border-color);
+  backdrop-filter: var(--glass-blur);
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  transition: all var(--transition-normal);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+}
+.menu-btn svg {
+  width: 24px;
+  height: 24px;
+}
+.menu-btn:hover {
+  background-color: var(--border-color);
+}
+
+.brand h1 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+.brand .subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Settings Dropdown Panel */
+.settings-panel {
+  position: absolute;
+  top: 80px;
+  right: 40px;
+  width: 320px;
+  background-color: var(--bg-sidebar);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--shadow-lg);
+  z-index: 95;
+  display: none;
+  flex-direction: column;
+  gap: 15px;
+  transform-origin: top right;
+  animation: scaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes scaleUp {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+.settings-panel h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 8px;
+}
+.setting-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.setting-item label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  display: flex;
+  justify-content: space-between;
+}
+.setting-item label span {
+  font-weight: 600;
+  color: var(--primary);
+}
+.setting-item input[type="range"] {
+  accent-color: var(--primary);
+  width: 100%;
+}
+
+/* ==========================================================================
+   Hero & Search Section
+   ========================================================================== */
+.hero-section {
+  padding: 40px 40px 20px 40px;
+  background-color: var(--glass-bg);
+  background-image: radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.search-container {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.search-bar-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.search-icon {
+  position: absolute;
+  left: 18px;
+  color: var(--text-secondary);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+.search-bar-wrapper input {
+  width: 100%;
+  padding: 16px 50px 16px 55px;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 2px solid var(--border-color);
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+.search-bar-wrapper input:focus {
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: var(--border-focus);
+  box-shadow: var(--shadow-glow);
+}
+.clear-search-btn {
+  position: absolute;
+  right: 18px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-fast);
+}
+.clear-search-btn svg {
+  width: 18px;
+  height: 18px;
+}
+.clear-search-btn:hover {
+  background-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.search-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  align-items: center;
+}
+.option-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.option-label {
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.radio-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+.radio-label:hover {
+  color: var(--primary);
+}
+.radio-label input {
+  accent-color: var(--primary);
+}
+
+/* Popular Tags Recommendation */
+.popular-tags {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex-direction: column;
+}
+.tag-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.tags-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tag-btn {
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.tag-btn:hover {
+  background-color: var(--primary-glow);
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+.tag-btn:active {
+  transform: translateY(0);
+}
+.tag-btn.active {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   Results Section & Banner
+   ========================================================================== */
+.results-section {
+  padding: 30px 40px 40px 40px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.view-banner {
+  background-color: var(--bg-sidebar);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+.banner-info h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+.banner-info p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.verses-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ==========================================================================
+   Ayah Card Design (The masterpiece card)
+   ========================================================================== */
+.ayah-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  transition: all var(--transition-normal);
+  backdrop-filter: var(--glass-blur);
+  position: relative;
+  overflow: hidden;
+}
+.ayah-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--primary);
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
+}
+.ayah-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--card-glow);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+.ayah-card:hover::before {
+  opacity: 1;
+}
+
+/* Card Header */
+.ayah-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+  font-size: 0.85rem;
+}
+.ayah-reference {
+  font-weight: 700;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ayah-index {
+  background-color: var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+.ayah-actions {
+  display: flex;
+  gap: 6px;
+}
+
+/* Card Body - Arabic Verse */
+.ayah-arabic {
+  font-family: var(--font-arabic);
+  font-size: 28px; /* Managed dynamically by settings */
+  line-height: 2;
+  text-align: right;
+  direction: rtl;
+  color: var(--text-primary);
+  padding: 10px 0;
+  word-wrap: break-word;
+  transition: font-size var(--transition-fast);
+}
+
+/* Card Body - Translation */
+.ayah-translation {
+  font-size: 16px; /* Managed dynamically by settings */
+  line-height: 1.6;
+  color: var(--text-secondary);
+  text-align: left;
+  border-left: 3px solid var(--border-color);
+  padding-left: 16px;
+  transition: font-size var(--transition-fast), color var(--transition-fast);
+}
+
+.ayah-translation i {
+  font-size: 0.85em;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Matching Query Highlight style */
+mark.highlight {
+  background-color: var(--accent-bg);
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
+/* Highlight inside Arabic (if we highlight Arabic - optional, currently we highlight translation) */
+.copy-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: var(--primary);
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+.ayah-card.copied .copy-badge {
+  opacity: 1;
+}
+
+/* Load More Section */
+.load-more-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+/* ==========================================================================
+   Toast Notification
+   ========================================================================== */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background-color: var(--bg-sidebar);
+  color: var(--text-primary);
+  border: 1px solid var(--primary);
+  box-shadow: var(--shadow-lg);
+  padding: 12px 24px;
+  border-radius: 30px;
+  z-index: 1000;
+  font-size: 0.95rem;
+  font-weight: 500;
+  pointer-events: none;
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+}
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* Empty Search Results / Error Screen */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-secondary);
+  gap: 15px;
+  border: 1px dashed var(--border-color);
+  border-radius: 16px;
+  background-color: rgba(255,255,255,0.01);
+}
+.empty-state svg {
+  width: 64px;
+  height: 64px;
+  color: var(--text-muted);
+}
+.empty-state h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.empty-state p {
+  font-size: 0.9rem;
+  max-width: 400px;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   Media Queries for Responsiveness
+   ========================================================================== */
+@media (max-width: 992px) {
+  /* Toggle Sidebar as Drawer */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    box-shadow: var(--shadow-lg);
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  
+  .sidebar-overlay.open {
+    display: block;
+  }
+  
+  .close-sidebar-btn {
+    display: block;
+  }
+  
+  .menu-btn {
+    display: block;
+  }
+  
+  .main-header {
+    padding: 15px 20px;
+  }
+  
+  .hero-section {
+    padding: 30px 20px 20px 20px;
+  }
+  
+  .results-section {
+    padding: 20px;
+  }
+  
+  .settings-panel {
+    right: 20px;
+    top: 70px;
+    width: calc(100vw - 40px);
+    max-width: 320px;
+  }
+}
+
+@media (max-width: 600px) {
+  .ayah-card {
+    padding: 20px;
+    gap: 16px;
+  }
+  
+  .ayah-arabic {
+    font-size: 24px;
+  }
+  
+  .ayah-translation {
+    font-size: 14px;
+    padding-left: 12px;
+  }
+  
+  .search-options {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .view-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

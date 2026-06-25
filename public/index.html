@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cari Qur'an - Pencarian & Rekomendasi Ayat Tematis</title>
+  <meta name="description" content="Temukan ayat-ayat Al-Qur'an berdasarkan topik, kata kunci, atau tema tertentu secara instan dengan pencarian pintar.">
+  
+  <!-- Google Fonts: Outfit for UI, Amiri for Arabic -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+  
+  <!-- PWA Manifest & Mobile Styling -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#059669">
+  
+  <!-- Apple Touch/PWA Support -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Cari Qur'an">
+  <link rel="apple-touch-icon" href="icon-512.jpg">
+</head>
+<body class="light-theme">
+  <!-- App Container -->
+  <div class="app-container">
+    
+    <!-- Sidebar (Surah List) -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 3l8 4.5v9L12 21L4 16.5v-9L12 3z"/>
+            <path d="M12 3v18"/>
+            <path d="M12 12l8-4.5"/>
+            <path d="M12 12L4 7.5"/>
+            <circle cx="12" cy="12" r="3" fill="currentColor" fill-opacity="0.2"/>
+          </svg>
+          <h2>Daftar Surah</h2>
+        </div>
+        <button class="close-sidebar-btn" id="closeSidebarBtn" aria-label="Tutup sidebar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Search Surah Input -->
+      <div class="sidebar-search">
+        <input type="text" id="searchSurahInput" placeholder="Cari nomor/nama surah...">
+      </div>
+      
+      <!-- Surah List Container -->
+      <div class="surah-list" id="surahList">
+        <div class="loader">Loading surah...</div>
+      </div>
+    </aside>
+
+    <!-- Overlay for mobile sidebar -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content Panel -->
+    <main class="main-content">
+      
+      <!-- Navigation Header -->
+      <header class="main-header">
+        <div class="header-left">
+          <button class="menu-btn" id="menuBtn" aria-label="Buka daftar surah">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <div class="brand">
+            <h1 class="gradient-text">Cari Qur'an</h1>
+            <p class="subtitle">Eksplorasi Tematis & Hikmah Ayat</p>
+          </div>
+        </div>
+        
+        <div class="header-actions">
+          <!-- Bookmarks Button -->
+          <button class="icon-btn" id="bookmarksBtn" title="Lihat Favorit/Bookmark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <span class="badge" id="bookmarkCount">0</span>
+          </button>
+          
+          <!-- Text Settings Toggle -->
+          <button class="icon-btn" id="settingsToggleBtn" title="Pengaturan Tampilan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+          </button>
+
+          <!-- Theme Toggle -->
+          <button class="icon-btn" id="themeToggleBtn" title="Ganti Tema Terang/Gelap">
+            <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Settings Dropdown Panel -->
+      <div class="settings-panel" id="settingsPanel">
+        <h3>Pengaturan Tampilan</h3>
+        <div class="setting-item">
+          <label for="arabicFontSizeSlider">Ukuran Teks Arab: <span id="arabicFontSizeVal">28px</span></label>
+          <input type="range" id="arabicFontSizeSlider" min="20" max="44" value="28">
+        </div>
+        <div class="setting-item">
+          <label for="translationFontSizeSlider">Ukuran Teks Terjemahan: <span id="translationFontSizeVal">16px</span></label>
+          <input type="range" id="translationFontSizeSlider" min="12" max="24" value="16">
+        </div>
+        <button class="btn btn-secondary btn-sm" id="resetSettingsBtn">Reset Pengaturan</button>
+      </div>
+
+      <!-- Hero / Search Section -->
+      <section class="hero-section">
+        <div class="search-container">
+          <div class="search-bar-wrapper">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="searchInput" placeholder="Cari ayat... Contoh: 'kunci kebenaran', 'sabar', 'shalat' atau '2:153'" autofocus>
+            <button class="clear-search-btn" id="clearSearchBtn" title="Hapus pencarian">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+          
+          <!-- Search Options -->
+          <div class="search-options">
+            <div class="option-group">
+              <span class="option-label">Pencocokan Kata:</span>
+              <label class="radio-label">
+                <input type="radio" name="matchMode" value="any" checked> Salah Satu (OR)
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="matchMode" value="all"> Semua Kata (AND)
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="matchMode" value="exact"> Frasa Tepat
+              </label>
+            </div>
+          </div>
+
+          <!-- Popular Tags Recommendation -->
+          <div class="popular-tags">
+            <span class="tag-label">Rekomendasi Topik:</span>
+            <div class="tags-wrapper" id="tagsWrapper">
+              <button class="tag-btn" data-tag="kebenaran">Kebenaran</button>
+              <button class="tag-btn" data-tag="sabar">Sabar</button>
+              <button class="tag-btn" data-tag="keadilan">Keadilan</button>
+              <button class="tag-btn" data-tag="hati tenang">Hati Tenang</button>
+              <button class="tag-btn" data-tag="sedekah">Sedekah</button>
+              <button class="tag-btn" data-tag="kasih sayang">Kasih Sayang</button>
+              <button class="tag-btn" data-tag="ilmu">Ilmu</button>
+              <button class="tag-btn" data-tag="surga">Surga</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Results Display Area -->
+      <section class="results-section">
+        
+        <!-- View Banner (Shows current context: Surah, Search, or Bookmarks) -->
+        <div class="view-banner" id="viewBanner">
+          <div class="banner-info">
+            <h2 id="bannerTitle">Semua Ayat Al-Qur'an</h2>
+            <p id="bannerDesc">Menampilkan seluruh ayat Al-Qur'an. Silakan gunakan pencarian untuk menemukan ayat tematis.</p>
+          </div>
+          <button class="btn btn-secondary" id="resetViewBtn" style="display: none;">
+            Kembali ke Beranda
+          </button>
+        </div>
+
+        <!-- Verses List -->
+        <div class="verses-container" id="versesContainer">
+          <div class="loader">Memuat data ayat...</div>
+        </div>
+
+        <!-- Pagination / Load More Button -->
+        <div class="load-more-container" id="loadMoreContainer" style="display: none;">
+          <button class="btn btn-primary" id="loadMoreBtn">Muat Lebih Banyak</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">Teks berhasil disalin!</div>
+</body>
+</html>
