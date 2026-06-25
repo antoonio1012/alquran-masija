@@ -11,6 +11,7 @@
   --text-primary: #111827;
   --text-secondary: #374151;
   --text-muted: #6b7280;
+  --text-translation: #000000; /* Pure black for maximum translation readability */
   --primary: #059669; /* Elegant Emerald Green */
   --primary-hover: #047857;
   --primary-glow: rgba(5, 150, 105, 0.08);
@@ -46,6 +47,7 @@
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
+  --text-translation: #cbd5e1; /* Light slate-gray in dark mode */
   --primary: #10b981;
   --primary-hover: #059669;
   --primary-glow: rgba(16, 185, 129, 0.15);
@@ -774,7 +776,7 @@ body {
 .ayah-translation {
   font-size: 16px; /* Managed dynamically by settings */
   line-height: 1.6;
-  color: var(--text-secondary);
+  color: var(--text-translation);
   text-align: left;
   border-left: 3px solid var(--border-color);
   padding-left: 16px;
