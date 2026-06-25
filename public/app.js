@@ -59,10 +59,10 @@ async function init() {
     // Load Bookmarks
     loadBookmarks();
 
-    // Fetch data in parallel
+    // Fetch data in parallel with cache busting
     const [quranRes, surahRes] = await Promise.all([
-      fetch('/quran.json'),
-      fetch('/surahs.json')
+      fetch('/quran.json?v=2'),
+      fetch('/surahs.json?v=2')
     ]);
 
     quranData = await quranRes.json();
