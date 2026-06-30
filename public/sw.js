@@ -1,9 +1,9 @@
-const CACHE_NAME = 'quran-search-v3';
+const CACHE_NAME = 'quran-search-v5';
 const ASSETS = [
   '/',
-  '/index.html?v=2',
-  '/style.css?v=2',
-  '/app.js?v=2',
+  '/index.html?v=5',
+  '/style.css?v=5',
+  '/app.js?v=5',
   '/quran.json?v=2',
   '/surahs.json?v=2',
   '/icon-512.jpg',
