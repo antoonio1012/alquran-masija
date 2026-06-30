@@ -11,8 +11,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=5">
-  <script src="app.js?v=5" defer></script>
+  <link rel="stylesheet" href="style.css?v=6">
+  <script src="app.js?v=6" defer></script>
   
   <!-- PWA Manifest & Mobile Styling -->
   <link rel="manifest" href="manifest.json">
@@ -134,21 +134,20 @@
             </svg>
           </button>
         </div>
+        <!-- Settings Dropdown Panel (moved inside sticky header) -->
+        <div class="settings-panel" id="settingsPanel">
+          <h3>Pengaturan Tampilan</h3>
+          <div class="setting-item">
+            <label for="arabicFontSizeSlider">Ukuran Teks Arab: <span id="arabicFontSizeVal">28px</span></label>
+            <input type="range" id="arabicFontSizeSlider" min="20" max="44" value="28">
+          </div>
+          <div class="setting-item">
+            <label for="translationFontSizeSlider">Ukuran Teks Terjemahan: <span id="translationFontSizeVal">16px</span></label>
+            <input type="range" id="translationFontSizeSlider" min="12" max="24" value="16">
+          </div>
+          <button class="btn btn-secondary btn-sm" id="resetSettingsBtn">Reset Pengaturan</button>
+        </div>
       </header>
-
-      <!-- Settings Dropdown Panel -->
-      <div class="settings-panel" id="settingsPanel">
-        <h3>Pengaturan Tampilan</h3>
-        <div class="setting-item">
-          <label for="arabicFontSizeSlider">Ukuran Teks Arab: <span id="arabicFontSizeVal">28px</span></label>
-          <input type="range" id="arabicFontSizeSlider" min="20" max="44" value="28">
-        </div>
-        <div class="setting-item">
-          <label for="translationFontSizeSlider">Ukuran Teks Terjemahan: <span id="translationFontSizeVal">16px</span></label>
-          <input type="range" id="translationFontSizeSlider" min="12" max="24" value="16">
-        </div>
-        <button class="btn btn-secondary btn-sm" id="resetSettingsBtn">Reset Pengaturan</button>
-      </div>
 
       <!-- Hero / Search Section -->
       <section class="hero-section">
