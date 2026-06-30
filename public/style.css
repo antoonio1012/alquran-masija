@@ -76,8 +76,6 @@ body {
   background-color: var(--bg-app);
   color: var(--text-primary);
   min-height: 100vh;
-  display: flex;
-  overflow-x: clip;
   transition: background-color var(--transition-normal), color var(--transition-normal);
 }
 
@@ -395,8 +393,6 @@ body {
    ========================================================================== */
 .main-content {
   flex: 1;
-  display: flex;
-  flex-direction: column;
   min-height: 100vh;
   padding: 0;
 }
