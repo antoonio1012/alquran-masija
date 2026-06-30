@@ -734,7 +734,7 @@ function setupEventListeners() {
 
   // Scroll event for sticky header and search visibility
   window.addEventListener('scroll', () => {
-    const threshold = 180; // Scroll threshold to show header search and shrink header
+    const threshold = 100; // Scroll threshold to show header search and shrink header
     if (window.scrollY > threshold) {
       document.body.classList.add('scrolled');
     } else {
