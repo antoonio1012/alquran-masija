@@ -50,6 +50,11 @@ const bookmarksBtn = document.getElementById('bookmarksBtn');
 const bookmarkCountBadge = document.getElementById('bookmarkCount');
 const toast = document.getElementById('toast');
 
+// Sticky Header Search Elements
+const headerSearch = document.getElementById('headerSearch');
+const headerSearchInput = document.getElementById('headerSearchInput');
+const clearHeaderSearchBtn = document.getElementById('clearHeaderSearchBtn');
+
 // Initialize application
 async function init() {
   try {
@@ -214,6 +219,7 @@ function performSearch() {
 
   // Show clear button
   clearSearchBtn.style.display = 'flex';
+  clearHeaderSearchBtn.style.display = 'flex';
   currentView = 'search';
   currentPage = 1;
   
@@ -227,6 +233,8 @@ function performSearch() {
     searchResults = refMatches;
     updateBanner('Hasil Pencarian Referensi', `Menemukan ayat referensi untuk "${input}"`);
     renderVerses();
+    const bannerEl = document.getElementById('viewBanner');
+    if (bannerEl) bannerEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
     return;
   }
 
@@ -302,6 +310,8 @@ function performSearch() {
   );
   
   renderVerses();
+  const bannerEl = document.getElementById('viewBanner');
+  if (bannerEl) bannerEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // Parse input reference (e.g. 2:153, Al-Baqarah 153)
@@ -342,7 +352,9 @@ function parseReference(input) {
 
 function clearSearchState() {
   searchInput.value = '';
+  headerSearchInput.value = '';
   clearSearchBtn.style.display = 'none';
+  clearHeaderSearchBtn.style.display = 'none';
   
   // Reset tag buttons styling
   document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
@@ -357,6 +369,7 @@ function clearSearchState() {
     'Menampilkan seluruh ayat Al-Qur\'an. Silakan gunakan pencarian untuk menemukan ayat tematis.'
   );
   renderVerses();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // ==========================================================================
@@ -446,6 +459,7 @@ function selectSurah(num) {
   closeSidebar();
   
   renderVerses();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // Recursively highlight matched keywords in DOM text nodes, leaving HTML tags untouched
@@ -678,12 +692,15 @@ function setupEventListeners() {
   closeSidebarBtn.addEventListener('click', closeSidebar);
   sidebarOverlay.addEventListener('click', closeSidebar);
 
-  // Search input typing
+  // Sync and handle main search input
   searchInput.addEventListener('input', () => {
+    headerSearchInput.value = searchInput.value;
     if (searchInput.value.trim()) {
       clearSearchBtn.style.display = 'flex';
+      clearHeaderSearchBtn.style.display = 'flex';
     } else {
       clearSearchBtn.style.display = 'none';
+      clearHeaderSearchBtn.style.display = 'none';
     }
   });
 
@@ -694,6 +711,36 @@ function setupEventListeners() {
   });
 
   clearSearchBtn.addEventListener('click', clearSearchState);
+
+  // Sync and handle sticky header search input
+  headerSearchInput.addEventListener('input', () => {
+    searchInput.value = headerSearchInput.value;
+    if (headerSearchInput.value.trim()) {
+      clearSearchBtn.style.display = 'flex';
+      clearHeaderSearchBtn.style.display = 'flex';
+    } else {
+      clearSearchBtn.style.display = 'none';
+      clearHeaderSearchBtn.style.display = 'none';
+    }
+  });
+
+  headerSearchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      performSearch();
+    }
+  });
+
+  clearHeaderSearchBtn.addEventListener('click', clearSearchState);
+
+  // Scroll event for sticky header and search visibility
+  window.addEventListener('scroll', () => {
+    const threshold = 180; // Scroll threshold to show header search and shrink header
+    if (window.scrollY > threshold) {
+      document.body.classList.add('scrolled');
+    } else {
+      document.body.classList.remove('scrolled');
+    }
+  });
 
   // Match modes toggle search trigger
   document.querySelectorAll('input[name="matchMode"]').forEach(el => {
@@ -736,6 +783,7 @@ function setupEventListeners() {
     
     updateBanner('Ayat Favorit Saya', `Menampilkan ${bookmarks.length} ayat yang telah Anda simpan.`);
     renderVerses();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
   // Settings dropdown toggle
